@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="app-title-tag">Barbería Elegante - Estilo & Tradición</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#e5c158',
+                            500: '#d4af37',
+                            600: '#b89228',
+                        },
+                        vintage: {
+                            dark: '#121212',
+                            card: '#1a1a1a',
+                            border: '#2a2a2a',
+                            gold: '#c5a059',
+                            cream: '#f4ebd0'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0c0c0c;
+            color: #e5e5e5;
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, .font-vintage {
+            font-family: 'Playfair Display', serif;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #f3e7e4 0%, #d4af37 50%, #aa7c11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-border-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+        }
+        .gold-border-glow:hover {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121212;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a2a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4af37;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-gold-500 selection:text-black">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full border border-gold-500/50 flex items-center justify-center bg-zinc-900 text-gold-500 shadow-md">
+                    <i class="fa-solid fa-scissors text-lg"></i>
+                </div>
+                <div>
+                    <span id="display-brand-name" class="font-vintage text-xl md:text-2xl font-bold tracking-wider gold-gradient-text block leading-tight">
+                        ESTILO & BARBA CLUB
+                    </span>
+                    <span class="text-[10px] text-zinc-400 uppercase tracking-widest block">Barbería Premium</span>
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#inicio" class="hover:text-gold-500 transition-colors">Inicio</a>
+                <a href="#servicios" class="hover:text-gold-500 transition-colors">Servicios</a>
+                <a href="#barberos" class="hover:text-gold-500 transition-colors">Nosotros</a>
+                <a href="#ubicacion" class="hover:text-gold-500 transition-colors">Ubicación</a>
+                <a href="#reserva" class="px-4 py-2 bg-gold-500 text-black font-semibold rounded-md hover:bg-gold-400 transition-all shadow-md">Agendar Cita</a>
+            </nav>
+
+            <!-- Admin modal toggle & Mobile menu button -->
+            <div class="flex items-center space-x-3">
+                <button onclick="openAdminModal()" class="text-xs bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-3 py-1.5 rounded-full border border-zinc-700 flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-gear text-gold-500"></i>
+                    <span class="hidden sm:inline">Personalizar</span>
+                </button>
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-zinc-300 hover:text-gold-500 text-xl focus:outline-none p-1">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-zinc-900 border-b border-zinc-800 px-4 pt-2 pb-4 space-y-3">
+            <a href="#inicio" onclick="toggleMobileMenu()" class="block text-zinc-300 hover:text-gold-500 py-1">Inicio</a>
+            <a href="#servicios" onclick="toggleMobileMenu()" class="block text-zinc-300 hover:text-gold-500 py-1">Servicios y Precios</a>
+            <a href="#barberos" onclick="toggleMobileMenu()" class="block text-zinc-300 hover:text-gold-500 py-1">Nuestros Barberos</a>
+            <a href="#ubicacion" onclick="toggleMobileMenu()" class="block text-zinc-300 hover:text-gold-500 py-1">Ubicación y Horarios</a>
+            <a href="#reserva" onclick="toggleMobileMenu()" class="block bg-gold-500 text-black font-semibold text-center py-2 rounded-md hover:bg-gold-400">Agendar Cita</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+
+        <!-- Hero Section -->
+        <section id="inicio" class="relative py-20 md:py-32 px-4 overflow-hidden border-b border-zinc-800">
+            <!-- Background vintage overlay styling -->
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black opacity-90 -z-10"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl -z-10"></div>
+
+            <div class="max-w-4xl mx-auto text-center space-y-6">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-zinc-900/80 border border-gold-500/30 text-gold-400 text-xs tracking-widest uppercase mb-2">
+                    <i class="fa-solid fa-skull"></i>
+                    <span>Corte Clásico & Estilos Modernos</span>
+                    <i class="fa-solid fa-skull"></i>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold font-vintage tracking-tight text-white">
+                    El Arte del Buen <span class="gold-gradient-text">Corte & Barbería</span>
+                </h1>
+
+                <p class="text-zinc-400 text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                    Un espacio elegante de relajación y estilo masculino. Experiencia tradicional, ambiente refinado con luz tenue, sillas de cuero y la atención de barberos profesionales.
+                </p>
+
+                <div class="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="#reserva" class="w-full sm:w-auto px-8 py-4 bg-gold-500 text-black font-bold text-base rounded-md hover:bg-gold-400 transition-all shadow-lg gold-border-glow flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Agendar Cita Ahora</span>
+                    </a>
+                    <a href="#servicios" class="w-full sm:w-auto px-8 py-4 bg-zinc-900 text-zinc-300 hover:text-white font-medium text-base rounded-md border border-zinc-700 hover:border-gold-500/50 transition-all flex items-center justify-center gap-2">
+                        <span>Ver Servicios y Precios</span>
+                    </a>
+                </div>
+
+                <!-- Features list -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12 text-zinc-400 text-xs md:text-sm border-t border-zinc-800/80 mt-12">
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-certificate text-gold-500"></i>
+                        <span>Barberos Expertos</span>
+                    </div>
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-chair text-gold-500"></i>
+                        <span>Sillas de Cuero Fina</span>
+                    </div>
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-whiskey-glass text-gold-500"></i>
+                        <span>Ambiente Relajado</span>
+                    </div>
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-clock text-gold-500"></i>
+                        <span>Atención Puntual</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery / Aesthetics Showcase -->
+        <section class="py-12 bg-zinc-950 border-b border-zinc-800">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="relative group overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 aspect-video md:aspect-square">
+                        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80" alt="Barbería Vintage" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-85 hover:opacity-100" onerror="this.src='https://placehold.co/600x400/1a1a1a/d4af37?text=Barberia+Vintage'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                            <span class="text-sm font-semibold text-zinc-200"><i class="fa-solid fa-shop text-gold-500 mr-2"></i>Instalaciones Vintage</span>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 aspect-video md:aspect-square">
+                        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=800&q=80" alt="Corte de Barba" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-85 hover:opacity-100" onerror="this.src='https://placehold.co/600x400/1a1a1a/d4af37?text=Corte+y+Barba'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                            <span class="text-sm font-semibold text-zinc-200"><i class="fa-solid fa-scissors text-gold-500 mr-2"></i>Perfilado & Detalle</span>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 aspect-video md:aspect-square">
+                        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80" alt="Herramientas" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-85 hover:opacity-100" onerror="this.src='https://placehold.co/600x400/1a1a1a/d4af37?text=Herramientas+Clasicas'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                            <span class="text-sm font-semibold text-zinc-200"><i class="fa-solid fa-pump-soap text-gold-500 mr-2"></i>Productos Premium</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Servicios y Precios -->
+        <section id="servicios" class="py-16 md:py-24 px-4 border-b border-zinc-800 bg-black">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center space-y-3 mb-12">
+                    <h2 class="text-xs uppercase tracking-widest text-gold-500 font-semibold">Tarifas & Menú</h2>
+                    <h3 class="text-3xl md:text-5xl font-vintage font-bold text-white">Nuestros Servicios</h3>
+                    <p class="text-zinc-400 text-sm max-w-lg mx-auto">Selecciona el servicio de tu preferencia para solicitar tu cita con nuestros especialistas.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Servicio 1 -->
+                    <div class="bg-zinc-900/60 p-6 rounded-xl border border-zinc-800 hover:border-gold-500/40 transition flex justify-between items-start">
+                        <div class="space-y-1">
+                            <h4 class="font-vintage text-xl font-bold text-white">Corte de Cabello Hombre</h4>
+                            <p class="text-xs text-zinc-400">Asesoría de imagen, lavado, corte clásico o moderno y acabado con pomada premium.</p>
+                        </div>
+                        <span id="price-corte-hombre" class="font-bold text-lg text-gold-500 whitespace-nowrap ml-4">$25.000</span>
+                    </div>
+
+                    <!-- Servicio 2 -->
+                    <div class="bg-zinc-900/60 p-6 rounded-xl border border-zinc-800 hover:border-gold-500/40 transition flex justify-between items-start">
+                        <div class="space-y-1">
+                            <h4 class="font-vintage text-xl font-bold text-white">Corte Niño o Joven</h4>
+                            <p class="text-xs text-zinc-400">Estilos modernos, diseños juveniles, paciencia y atención personalizada para los más chicos.</p>
+                        </div>
+                        <span id="price-corte-joven" class="font-bold text-lg text-gold-500 whitespace-nowrap ml-4">$22.000</span>
+                    </div>
+
+                    <!-- Servicio 3 -->
+                    <div class="bg-zinc-900/60 p-6 rounded-xl border border-zinc-800 hover:border-gold-500/40 transition flex justify-between items-start">
+                        <div class="space-y-1">
+                            <h4 class="font-vintage text-xl font-bold text-white">Corte y Pulido de Barba</h4>
+                            <p class="text-xs text-zinc-400">Ritual con toalla caliente, perfilado con navaja tradicional e hidratación con aceites.</p>
+                        </div>
+                        <span id="price-corte-barba" class="font-bold text-lg text-gold-500 whitespace-nowrap ml-4">$25.000</span>
+                    </div>
+
+                    <!-- Servicio 4 -->
+                    <div class="bg-zinc-900/60 p-6 rounded-xl border border-zinc-800 hover:border-gold-500/40 transition flex justify-between items-start">
+                        <div class="space-y-1">
+                            <h4 class="font-vintage text-xl font-bold text-white">Pulido de Cejas & Especiales</h4>
+                            <p class="text-xs text-zinc-400">Diseño facial, perfilado de cejas y cortes psicodélicos o artísticos personalizados.</p>
+                        </div>
+                        <span id="price-corte-cejas" class="font-bold text-sm text-gold-500/90 whitespace-nowrap ml-4 italic">Consultar</span>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center text-xs text-zinc-500 italic">
+                    * Precios expresados en Pesos Colombianos ($ COP). Sujetos a cambios por la administración.
+                </div>
+            </div>
+        </section>
+
+        <!-- Nosotros / Barberos -->
+        <section id="barberos" class="py-16 md:py-24 px-4 border-b border-zinc-800 bg-zinc-950">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center space-y-3 mb-14">
+                    <h2 class="text-xs uppercase tracking-widest text-gold-500 font-semibold">Mano de Obra Calificada</h2>
+                    <h3 class="text-3xl md:text-5xl font-vintage font-bold text-white">Nuestros Barberos</h3>
+                    <p class="text-zinc-400 text-sm max-w-xl mx-auto">Profesionales apasionados con amplia experiencia en cortes masculinos, infantiles y el cuidado fino de barbas.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Barbero 1: Junior -->
+                    <div class="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden flex flex-col justify-between hover:border-gold-500/40 transition">
+                        <div class="p-6 space-y-4">
+                            <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-2 border-gold-500/60 shadow-lg">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Junior" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x200/2a2a2a/d4af37?text=Junior'">
+                            </div>
+                            <div class="text-center">
+                                <h4 class="font-vintage text-2xl font-bold text-white">Junior</h4>
+                                <span class="text-xs text-gold-500 uppercase tracking-widest font-semibold block mt-1">Especialista en Fade & Barba</span>
+                            </div>
+                            <p class="text-zinc-400 text-xs text-center leading-relaxed">
+                                Más de 3 años de experiencia en cortes masculinos de precisión y barbería tradicional. Apasionado por devolver la confianza a cada cliente con un estilo único.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-zinc-950/60 border-t border-zinc-800/80 text-center">
+                            <a href="#reserva" onclick="selectBarber('Junior')" class="text-xs font-semibold text-gold-500 hover:text-gold-400 flex items-center justify-center gap-1">
+                                <span>Agendar con Junior</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Barbero 2: Rubén -->
+                    <div class="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden flex flex-col justify-between hover:border-gold-500/40 transition">
+                        <div class="p-6 space-y-4">
+                            <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-2 border-gold-500/60 shadow-lg">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" alt="Rubén" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x200/2a2a2a/d4af37?text=Ruben'">
+                            </div>
+                            <div class="text-center">
+                                <h4 class="font-vintage text-2xl font-bold text-white">Rubén</h4>
+                                <span class="text-xs text-gold-500 uppercase tracking-widest font-semibold block mt-1">Estilos Modernos & Jóvenes</span>
+                            </div>
+                            <p class="text-zinc-400 text-xs text-center leading-relaxed">
+                                Experto con más de 3 años domando estilos arriesgados, cortes juveniles y perfilado de barba. Gran paciencia y excelente trato para niños y jóvenes.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-zinc-950/60 border-t border-zinc-800/80 text-center">
+                            <a href="#reserva" onclick="selectBarber('Rubén')" class="text-xs font-semibold text-gold-500 hover:text-gold-400 flex items-center justify-center gap-1">
+                                <span>Agendar con Rubén</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Barbero 3: Yerson -->
+                    <div class="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden flex flex-col justify-between hover:border-gold-500/40 transition">
+                        <div class="p-6 space-y-4">
+                            <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-2 border-gold-500/60 shadow-lg">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" alt="Yerson" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x200/2a2a2a/d4af37?text=Yerson'">
+                            </div>
+                            <div class="text-center">
+                                <h4 class="font-vintage text-2xl font-bold text-white">Yerson</h4>
+                                <span class="text-xs text-gold-500 uppercase tracking-widest font-semibold block mt-1">Corte Clásico & Navaja</span>
+                            </div>
+                            <p class="text-zinc-400 text-xs text-center leading-relaxed">
+                                Maestro en técnicas tradicionales de navaja, pulido de cejas y cuidado facial. Más de 3 años de trayectoria garantizando acabados impecables.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-zinc-950/60 border-t border-zinc-800/80 text-center">
+                            <a href="#reserva" onclick="selectBarber('Yerson')" class="text-xs font-semibold text-gold-500 hover:text-gold-400 flex items-center justify-center gap-1">
+                                <span>Agendar con Yerson</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulario de Reserva directo a WhatsApp -->
+        <section id="reserva" class="py-16 md:py-24 px-4 bg-black border-b border-zinc-800 relative">
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/10 rounded-bl-full pointer-events-none"></div>
+
+                    <div class="text-center space-y-2 mb-8">
+                        <div class="inline-flex items-center space-x-2 text-gold-500 text-xs uppercase tracking-widest font-semibold">
+                            <i class="fa-brands fa-whatsapp text-base"></i>
+                            <span>Reserva Directa</span>
+                        </div>
+                        <h3 class="text-3xl font-vintage font-bold text-white">Agenda tu Cita</h3>
+                        <p class="text-zinc-400 text-xs md:text-sm">Completa tus datos y la solicitud se enviará directo al WhatsApp oficial de la barbería para confirmación inmediata.</p>
+                    </div>
+
+                    <form id="booking-form" onsubmit="sendWhatsAppBooking(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Nombre -->
+                            <div>
+                                <label class="block text-xs font-medium text-zinc-300 mb-1">Nombre Completo *</label>
+                                <input type="text" id="client-name" required placeholder="Ej: Carlos Mendoza" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-500 transition">
+                            </div>
+
+                            <!-- Teléfono -->
+                            <div>
+                                <label class="block text-xs font-medium text-zinc-300 mb-1">Teléfono / WhatsApp *</label>
+                                <input type="tel" id="client-phone" required placeholder="Ej: 300 123 4567" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-500 transition">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Servicio -->
+                            <div>
+                                <label class="block text-xs font-medium text-zinc-300 mb-1">Servicio Requerido *</label>
+                                <select id="client-service" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-500 transition">
+                                    <option value="Corte de Cabello Hombre ($25.000)">Corte Hombre ($25.000 COP)</option>
+                                    <option value="Corte Niño o Joven ($22.000)">Corte Niño/Joven ($22.000 COP)</option>
+                                    <option value="Corte y Pulido de Barba ($25.000)">Corte & Barba ($25.000 COP)</option>
+                                    <option value="Pulido de Cejas / Especiales">Pulido de Cejas / Especiales</option>
+                                    <option value="Servicio Completo (Corte + Barba)">Combo Corte + Barba ($50.000 COP)</option>
+                                </select>
+                            </div>
+
+                            <!-- Barbero -->
+                            <div>
+                                <label class="block text-xs font-medium text-zinc-300 mb-1">Barbero de Preferencia *</label>
+                                <select id="client-barber" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-500 transition">
+                                    <option value="Cualquiera disponible">Cualquiera disponible</option>
+                                    <option value="Junior">Junior (Fade & Barba)</option>
+                                    <option value="Rubén">Rubén (Estilos Modernos)</option>
+                                    <option value="Yerson">Yerson (Corte Clásico)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Fecha -->
+                            <div>
+                                <label class="block text-xs font-medium text-zinc-300 mb-1">Fecha Deseada *</label>
+                                <input type="date" id="client-date" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-500 transition">
+                            </div>
+
+                            <!-- Hora -->
+                            <div>
+                                <label class="block text-xs font-medium text-zinc-300 mb-1">Hora Aproximada *</label>
+                                <input type="time" id="client-time" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-500 transition">
+                            </div>
+                        </div>
+
+                        <!-- Ubicación del cliente opcional -->
+                        <div>
+                            <label class="block text-xs font-medium text-zinc-300 mb-1">Barrio o Ubicación (Opcional)</label>
+                            <input type="text" id="client-location" placeholder="Ej: Toledo Campestre / Sector Sur" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-gold-500 transition">
+                        </div>
+
+                        <!-- Botón Enviar -->
+                        <div class="pt-4">
+                            <button type="submit" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-xl"></i>
+                                <span>Confirmar Cita por WhatsApp</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ubicación y Horarios -->
+        <section id="ubicacion" class="py-16 md:py-20 px-4 bg-zinc-950 border-b border-zinc-800">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-6">
+                    <div>
+                        <h2 class="text-xs uppercase tracking-widest text-gold-500 font-semibold mb-1">Encuéntranos</h2>
+                        <h3 class="text-3xl font-vintage font-bold text-white">Ubicación & Horarios</h3>
+                    </div>
+
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-gold-500 shrink-0 mt-0.5">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-white block">Dirección Principal:</span>
+                                <span id="display-address" class="text-zinc-400">Calle 37 No. 43A – 56, Toledo Campestre</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-gold-500 shrink-0 mt-0.5">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-white block">Horario de Atención:</span>
+                                <p id="display-hours" class="text-zinc-400 text-xs space-y-1">
+                                    <span>Lunes a Sábados: 08:30 am - 07:30 pm</span><br>
+                                    <span>Domingos: 10:00 am - 04:00 pm</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-gold-500 shrink-0 mt-0.5">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-white block">Línea Directa:</span>
+                                <span id="display-phone-text" class="text-zinc-400">+57 304 536 9661</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulación de mapa / Tarjeta visual -->
+                <div class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 text-center space-y-4">
+                    <div class="w-16 h-16 bg-gold-500/10 text-gold-500 rounded-full flex items-center justify-center mx-auto text-2xl border border-gold-500/30">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h4 class="font-vintage text-xl font-bold text-white">¿Cómo Llegar?</h4>
+                    <p class="text-zinc-400 text-xs">Ubicados estratégicamente en Toledo Campestre para ofrecerte fácil acceso y comodidad durante tu visita.</p>
+                    <a id="gmaps-link" href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="inline-block px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-gold-400 font-medium text-xs rounded-lg border border-zinc-700 transition">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> Abrir en Google Maps
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black py-10 px-4 border-t border-zinc-900 text-center space-y-6">
+        <div class="max-w-4xl mx-auto flex flex-col items-center space-y-4">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-scissors text-gold-500"></i>
+                <span id="display-footer-brand" class="font-vintage text-lg font-bold text-white tracking-wider">ESTILO & BARBA CLUB</span>
+            </div>
+            
+            <!-- Redes Sociales -->
+            <div class="flex items-center space-x-6 text-zinc-400 text-lg">
+                <a href="#" class="hover:text-gold-500 transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-gold-500 transition"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-gold-500 transition"><i class="fa-brands fa-tiktok"></i></a>
+                <a id="footer-wa-link" href="#" class="hover:text-gold-500 transition"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+
+            <p class="text-zinc-500 text-xs max-w-md">
+                © <span id="year-copy"></span> <span id="display-copy-name">Estilo & Barba Club</span>. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- MODAL DE ADMINISTRACIÓN / PERSONALIZACIÓN -->
+    <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-zinc-700 rounded-2xl w-full max-w-xl p-6 md:p-8 space-y-6 max-h-[90vh] overflow-y-auto">
+            
+            <div class="flex justify-between items-center border-b border-zinc-800 pb-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-sliders text-gold-500"></i>
+                    <h3 class="font-vintage text-xl font-bold text-white">Panel de Personalización</h3>
+                </div>
+                <button onclick="closeAdminModal()" class="text-zinc-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Advertencia Oficial -->
+            <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 text-xs text-amber-200/90 space-y-1">
+                <p class="font-bold flex items-center gap-1.5 text-amber-400">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    ADVERTENCIA IMPORTANTE DE PERSONALIZACIÓN
+                </p>
+                <p>
+                    Por la compra inicial ($100.000 COP) tienes derecho a configurar tus datos una (1) sola vez. Asegúrate de ingresar información real (Nombre del negocio, WhatsApp, dirección y tarifas). Los cambios posteriores requieren ticket de servicio con soporte técnico.
+                </p>
+            </div>
+
+            <!-- Formulario de Configuración -->
+            <form onsubmit="saveCustomization(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-medium text-zinc-300 mb-1">Nombre de la Barbería</label>
+                    <input type="text" id="config-brand-name" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-gold-500">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium text-zinc-300 mb-1">Número WhatsApp (sin +)</label>
+                        <input type="text" id="config-phone" placeholder="573045369661" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-gold-500">
+                    </div>
+                    <div>
+                        <label class="block font-medium text-zinc-300 mb-1">Dirección del Local</label>
+                        <input type="text" id="config-address" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-gold-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-zinc-300 mb-1">Horario de Atención</label>
+                    <input type="text" id="config-hours" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-gold-500">
+                </div>
+
+                <div class="border-t border-zinc-800 pt-3">
+                    <span class="font-bold text-gold-500 block mb-2">Precios de Servicios ($ COP)</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-zinc-400 mb-1">Corte Hombre</label>
+                            <input type="text" id="config-price-hombre" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-zinc-400 mb-1">Corte Niño/Joven</label>
+                            <input type="text" id="config-price-joven" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-zinc-400 mb-1">Corte Barba</label>
+                            <input type="text" id="config-price-barba" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-white">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones modal -->
+                <div class="pt-4 flex justify-end space-x-3 border-t border-zinc-800">
+                    <button type="button" onclick="closeAdminModal()" class="px-4 py-2 bg-zinc-800 text-zinc-300 rounded-lg hover:bg-zinc-700">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-gold-500 text-black font-bold rounded-lg hover:bg-gold-400">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast Modal (Remplaza alert) -->
+    <div id="toast-message" class="fixed bottom-5 right-5 bg-zinc-900 border border-gold-500/50 text-white px-5 py-3 rounded-xl shadow-2xl hidden z-50 flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-gold-500 text-lg"></i>
+        <span id="toast-text" class="text-xs font-medium">Configuración guardada correctamente.</span>
+    </div>
+
+    <!-- Application Logic Script -->
+    <script>
+        // Configuración por defecto de la barbería
+        const defaultAppConfig = {
+            brandName: "Estilo & Barba Club",
+            phone: "573045369661",
+            address: "Calle 37 No. 43A – 56 Toledo Campestre",
+            hours: "Lunes a sábados: 08:30 am - 07:30 pm | Domingos: 10:00 am - 04:00 pm",
+            priceHombre: "$25.000",
+            priceJoven: "$22.000",
+            priceBarba: "$25.000"
+        };
+
+        // Estado global cargado desde localStorage o fallback
+        let appConfig = JSON.parse(localStorage.getItem('barberAppConfig')) || defaultAppConfig;
+
+        // Inicializar interfaz al cargar documento
+        window.addEventListener('DOMContentLoaded', () => {
+            renderAppConfig();
+            document.getElementById('year-copy').textContent = new Date().getFullYear();
+
+            // Configurar fecha mínima de agendamiento como HOY
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('client-date');
+            if (dateInput) {
+                dateInput.min = today;
+                dateInput.value = today;
+            }
+        });
+
+        // Aplicar la configuración al DOM
+        function renderAppConfig() {
+            document.getElementById('app-title-tag').textContent = `${appConfig.brandName} - Barbería Premium`;
+            document.getElementById('display-brand-name').textContent = appConfig.brandName;
+            document.getElementById('display-footer-brand').textContent = appConfig.brandName;
+            document.getElementById('display-copy-name').textContent = appConfig.brandName;
+            
+            document.getElementById('display-address').textContent = appConfig.address;
+            document.getElementById('display-phone-text').textContent = `+${appConfig.phone}`;
+            document.getElementById('footer-wa-link').href = `https://wa.me/${appConfig.phone}`;
+
+            // Horarios
+            const hoursContainer = document.getElementById('display-hours');
+            if (hoursContainer) {
+                hoursContainer.textContent = appConfig.hours;
+            }
+
+            // Precios
+            document.getElementById('price-corte-hombre').textContent = appConfig.priceHombre;
+            document.getElementById('price-corte-joven').textContent = appConfig.priceJoven;
+            document.getElementById('price-corte-barba').textContent = appConfig.priceBarba;
+
+            // Rellenar formulario de personalización con los valores actuales
+            document.getElementById('config-brand-name').value = appConfig.brandName;
+            document.getElementById('config-phone').value = appConfig.phone;
+            document.getElementById('config-address').value = appConfig.address;
+            document.getElementById('config-hours').value = appConfig.hours;
+            document.getElementById('config-price-hombre').value = appConfig.priceHombre;
+            document.getElementById('config-price-joven').value = appConfig.priceJoven;
+            document.getElementById('config-price-barba').value = appConfig.priceBarba;
+        }
+
+        // Selección rápida de barbero desde tarjetas
+        function selectBarber(barberName) {
+            const selectEl = document.getElementById('client-barber');
+            if (selectEl) {
+                selectEl.value = barberName;
+            }
+        }
+
+        // Generar y enviar mensaje formateado a WhatsApp
+        function sendWhatsAppBooking(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('client-name').value.trim();
+            const phone = document.getElementById('client-phone').value.trim();
+            const service = document.getElementById('client-service').value;
+            const barber = document.getElementById('client-barber').value;
+            const date = document.getElementById('client-date').value;
+            const time = document.getElementById('client-time').value;
+            const location = document.getElementById('client-location').value.trim() || 'No especificada';
+
+            // Armar texto del mensaje
+            const message = `¡Hola *${appConfig.brandName}*! 💈\n\nDeseo solicitar una cita con los siguientes datos:\n\n` +
+                `👤 *Cliente:* ${name}\n` +
+                `📞 *Teléfono:* ${phone}\n` +
+                `✂️ *Servicio:* ${service}\n` +
+                `💈 *Barbero:* ${barber}\n` +
+                `📅 *Fecha:* ${date}\n` +
+                `⏰ *Hora:* ${time}\n` +
+                `📍 *Ubicación:* ${location}\n\n` +
+                `Quedo atento a su confirmación de disponibilidad. ¡Muchas gracias!`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${appConfig.phone}?text=${encodedMessage}`;
+
+            // Abrir WhatsApp en nueva pestaña
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Abrir Modal Admin
+        function openAdminModal() {
+            document.getElementById('admin-modal').classList.remove('hidden');
+        }
+
+        // Cerrar Modal Admin
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        // Guardar Personalización
+        function saveCustomization(event) {
+            event.preventDefault();
+
+            appConfig.brandName = document.getElementById('config-brand-name').value.trim() || defaultAppConfig.brandName;
+            appConfig.phone = document.getElementById('config-phone').value.trim().replace(/[^0-9]/g, '') || defaultAppConfig.phone;
+            appConfig.address = document.getElementById('config-address').value.trim() || defaultAppConfig.address;
+            appConfig.hours = document.getElementById('config-hours').value.trim() || defaultAppConfig.hours;
+            appConfig.priceHombre = document.getElementById('config-price-hombre').value.trim() || defaultAppConfig.priceHombre;
+            appConfig.priceJoven = document.getElementById('config-price-joven').value.trim() || defaultAppConfig.priceJoven;
+            appConfig.priceBarba = document.getElementById('config-price-barba').value.trim() || defaultAppConfig.priceBarba;
+
+            // Guardar en localStorage
+            localStorage.setItem('barberAppConfig', JSON.stringify(appConfig));
+
+            // Actualizar vista y cerrar modal
+            renderAppConfig();
+            closeAdminModal();
+            showToast("¡Configuración guardada e implementada!");
+        }
+
+        // Notificación flotante personalizada
+        function showToast(msg) {
+            const toast = document.getElementById('toast-message');
+            const toastText = document.getElementById('toast-text');
+            toastText.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+
+        // Toggle Menú Móvil
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
